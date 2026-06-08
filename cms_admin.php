@@ -40,95 +40,96 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['hotel_id'])) {
 include 'includes/header.php'; 
 ?>
 
-<div class="container mt-5 mb-5" style="min-height: 70vh;">
-    
-    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
-        <div>
-            <h2 class="fw-bold mb-0">Admin Overview</h2>
-            <p class="text-muted mb-0">Welcome back, <?php echo htmlspecialchars($_SESSION['name']); ?></p>
+<main class="flex-grow-1 py-5 bg-light">
+    <div class="container">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+            <div>
+                <h2 class="fw-bold mb-0" style="font-family: 'Times New Roman', Times, serif;">Admin Overview</h2>
+                <p class="text-muted mb-0">Welcome back, <?php echo htmlspecialchars($_SESSION['name']); ?></p>
+            </div>
+            <span class="badge bg-success px-3 py-2 rounded-pill"><i class="bi bi-circle-fill small me-2"></i>System Online</span>
         </div>
-        <span class="badge bg-success px-3 py-2 rounded-pill"><i class="bi bi-circle-fill small me-2"></i>System Online</span>
-    </div>
 
-    <div class="row mb-5">
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 rounded-4 bg-primary text-white">
-                <div class="card-body p-4">
-                    <h6 class="text-uppercase fw-bold text-white-50">Total Revenue</h6>
-                    <h2 class="display-6 fw-bold mb-0">$<?php echo number_format($totalRevenue, 2); ?></h2>
+        <div class="row mb-5">
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 rounded-4 bg-primary text-white">
+                    <div class="card-body p-4">
+                        <h6 class="text-uppercase fw-bold text-white-50">Total Revenue</h6>
+                        <h2 class="display-6 fw-bold mb-0">$<?php echo number_format($totalRevenue, 2); ?></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 rounded-4 bg-dark text-white">
+                    <div class="card-body p-4">
+                        <h6 class="text-uppercase fw-bold text-white-50">Active Bookings</h6>
+                        <h2 class="display-6 fw-bold mb-0"><?php echo $totalBookings; ?></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 rounded-4 bg-white">
+                    <div class="card-body p-4">
+                        <h6 class="text-uppercase fw-bold text-muted">Registered Users</h6>
+                        <h2 class="display-6 fw-bold mb-0 text-dark"><?php echo $totalUsers; ?></h2>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 rounded-4 bg-dark text-white">
-                <div class="card-body p-4">
-                    <h6 class="text-uppercase fw-bold text-white-50">Active Bookings</h6>
-                    <h2 class="display-6 fw-bold mb-0"><?php echo $totalBookings; ?></h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 rounded-4 bg-light">
-                <div class="card-body p-4">
-                    <h6 class="text-uppercase fw-bold text-muted">Registered Users</h6>
-                    <h2 class="display-6 fw-bold mb-0 text-dark"><?php echo $totalUsers; ?></h2>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <h4 class="fw-bold mb-3">Property Management</h4>
-    <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="table-dark">
-                    <tr>
-                        <th class="py-3 px-4">Property</th>
-                        <th class="py-3">Manager Contact</th>
-                        <th class="py-3">Base Price</th>
-                        <th class="py-3">Status</th>
-                        <th class="py-3 text-end px-4">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($hotels as $hotel): ?>
+        <h4 class="fw-bold mb-3">Property Management</h4>
+        <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 bg-white">
+                    <thead class="table-dark">
                         <tr>
-                            <td class="px-4 py-3 fw-bold"><?php echo htmlspecialchars($hotel['name']); ?></td>
-                            <td class="py-3 text-muted"><?php echo htmlspecialchars($hotel['manager_email']); ?></td>
-                            <td class="py-3">$<?php echo number_format($hotel['base_price'], 2); ?></td>
-                            <td class="py-3">
-                                <?php if ($hotel['status'] == 'approved'): ?>
-                                    <span class="badge bg-success text-white">Approved</span>
-                                <?php elseif ($hotel['status'] == 'pending'): ?>
-                                    <span class="badge bg-warning text-dark">Pending</span>
-                                <?php else: ?>
-                                    <span class="badge bg-danger text-white">Denied</span>
-                                <?php endif; ?>
-                            </td>
-                            <td class="py-3 text-end px-4">
-                                <form action="cms_admin.php" method="POST" class="d-inline">
-                                    <input type="hidden" name="hotel_id" value="<?php echo $hotel['id']; ?>">
-                                    
-                                    <?php if ($hotel['status'] !== 'approved'): ?>
-                                        <button type="submit" name="action" value="approve" class="btn btn-sm btn-outline-success fw-bold rounded-pill px-3">Approve</button>
-                                    <?php endif; ?>
-                                    
-                                    <?php if ($hotel['status'] !== 'denied'): ?>
-                                        <button type="submit" name="action" value="deny" class="btn btn-sm btn-outline-danger fw-bold rounded-pill px-3">Deny</button>
-                                    <?php endif; ?>
-                                </form>
-                            </td>
+                            <th class="py-3 px-4">Property</th>
+                            <th class="py-3">Manager Contact</th>
+                            <th class="py-3">Base Price</th>
+                            <th class="py-3">Status</th>
+                            <th class="py-3 text-end px-4">Actions</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($hotels as $hotel): ?>
+                            <tr>
+                                <td class="px-4 py-3 fw-bold"><?php echo htmlspecialchars($hotel['name']); ?></td>
+                                <td class="py-3 text-muted"><?php echo htmlspecialchars($hotel['manager_email']); ?></td>
+                                <td class="py-3">$<?php echo number_format($hotel['base_price'], 2); ?></td>
+                                <td class="py-3">
+                                    <?php if ($hotel['status'] == 'approved'): ?>
+                                        <span class="badge bg-success text-white">Approved</span>
+                                    <?php elseif ($hotel['status'] == 'pending'): ?>
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    <?php else: ?>
+                                        <span class="badge bg-danger text-white">Denied</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="py-3 text-end px-4">
+                                    <form action="cms_admin.php" method="POST" class="d-inline">
+                                        <input type="hidden" name="hotel_id" value="<?php echo $hotel['id']; ?>">
+                                        
+                                        <?php if ($hotel['status'] !== 'approved'): ?>
+                                            <button type="submit" name="action" value="approve" class="btn btn-sm btn-outline-success fw-bold rounded-pill px-3">Approve</button>
+                                        <?php endif; ?>
+                                        
+                                        <?php if ($hotel['status'] !== 'denied'): ?>
+                                            <button type="submit" name="action" value="deny" class="btn btn-sm btn-outline-danger fw-bold rounded-pill px-3">Deny</button>
+                                        <?php endif; ?>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+        <div class="mt-5 text-end">
+            <a href="logout.php" class="btn btn-outline-dark rounded-pill px-4">Sign Out</a>
+        </div>
+
     </div>
-
-    <div class="mt-5 text-end">
-        <a href="login.php" class="btn btn-outline-dark rounded-pill px-4">Sign Out</a>
-    </div>
-
-</div>
-
+</main>
 <?php include 'includes/footer.php'; ?>

@@ -1,4 +1,4 @@
-<footer class="bg-dark text-white text-center py-4 mt-5">
+<footer class="bg-dark text-white text-center py-4 mt-auto w-100">
     <div class="container">
         <p class="mb-0 fw-bold">HAVEN.</p>
         <small class="text-secondary">Monopolizing the booking industry. &copy; <?php echo date('Y'); ?></small>
