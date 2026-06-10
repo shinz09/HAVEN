@@ -27,6 +27,7 @@ CREATE TABLE `rooms` (
   `hotel_id` int(11) NOT NULL,
   `room_number` varchar(10) NOT NULL,
   `room_type` varchar(50) NOT NULL,
+  `room_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   `status` enum('vacant','occupied') NOT NULL DEFAULT 'vacant',
   `image_url` varchar(255) NOT NULL,
   FOREIGN KEY (`hotel_id`) REFERENCES `hotels`(`id`)
@@ -46,8 +47,16 @@ CREATE TABLE `bookings` (
 INSERT INTO `accounts` (`email`, `password`, `role`, `name`) VALUES
 ('admin@haven.com', 'password123', 'admin', 'Haven God Mode'),
 ('manager@peninsula.com', 'password123', 'hotel', 'Peninsula Manager'),
-('jacob@user.com', 'password123', 'user', 'Jacob Arroyo');
+('jacob@user.com', 'password123', 'user', 'Jacob Arroyo'),
+('user1@haven.com', 'password123', 'user', 'Test User One'),
+('user2@haven.com', 'password123', 'user', 'Test User Two'),
+('user3@haven.com', 'password123', 'user', 'Test User Three'),
+('user4@haven.com', 'password123', 'user', 'Test User Four'),
+('manager@seashore.com', 'password123', 'hotel', 'Seashore Manager'),
+('manager@skyview.com', 'password123', 'hotel', 'Skyview Manager');
 
--- Insert a Dummy Hotel for your search engine to find
+-- Insert dummy hotels for your search engine to find
 INSERT INTO `hotels` (`manager_id`, `name`, `location`, `description`, `base_price`, `image_url`, `michelin_rating`) VALUES
-(2, 'The Peninsula Manila', 'Manila', 'A luxurious 5-star experience in the heart of Makati.', 250.00, 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800', 5);
+(2, 'The Peninsula Manila', 'Manila', 'A luxurious 5-star experience in the heart of Makati.', 250.00, 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800', 5),
+(4, 'The Seashore Retreat', 'Boracay', 'An elegant oceanfront hotel with private balconies and premium service.', 220.00, 'https://images.unsplash.com/photo-1501117716987-c8e4b0d5e30f?w=800', 4),
+(5, 'Skyview Suites', 'Cebu', 'Stylish rooftop suites with panoramic city views and modern amenities.', 190.00, 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800', 4);

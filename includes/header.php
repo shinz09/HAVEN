@@ -15,6 +15,13 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+$loggedIn = isset($_SESSION['user_id']);
+$userRole = $loggedIn ? $_SESSION['role'] : null;
+?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container">
@@ -25,7 +32,18 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav align-items-center">
                 <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="login.php">Sign In</a></li>
+                <?php if ($loggedIn): ?>
+                    <?php if ($userRole === 'admin'): ?>
+                        <li class="nav-item"><a class="nav-link" href="cms_admin.php">Admin</a></li>
+                    <?php elseif ($userRole === 'hotel'): ?>
+                        <li class="nav-item"><a class="nav-link" href="cms_hotel.php">Manager</a></li>
+                    <?php else: ?>
+                        <li class="nav-item"><a class="nav-link" href="index.php">My Account</a></li>
+                    <?php endif; ?>
+                    <li class="nav-item"><a class="nav-link" href="logout.php">Sign Out</a></li>
+                <?php else: ?>
+                    <li class="nav-item"><a class="nav-link" href="login.php">Sign In</a></li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>

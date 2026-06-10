@@ -70,10 +70,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
 
-            <div class="mt-4 p-3 bg-light rounded text-center small text-muted">
+            <div class="mt-4 p-3 bg-light rounded text-center small text-muted text-start">
                 <strong>MVP Test Accounts:</strong><br>
                 Admin: admin@haven.com / password123<br>
-                Hotel: manager@peninsula.com / password123
+                Hotel: manager@peninsula.com / password123<br>
+                Hotel: manager@seashore.com / password123<br>
+                Hotel: manager@skyview.com / password123<br>
+                <hr class="my-2">
+                User: jacob@user.com / password123<br>
+                User: user1@haven.com / password123<br>
+                User: user2@haven.com / password123<br>
+                User: user3@haven.com / password123<br>
+                User: user4@haven.com / password123
             </div>
 
         </div>

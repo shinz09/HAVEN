@@ -1,12 +1,21 @@
 <?php 
 // 1. Connect to DB and Header
 require_once 'includes/db.php'; 
+require_once 'includes/auth.php';
+requireLogin();
+
+if ($_SESSION['role'] !== 'user') {
+    header('Location: index.php');
+    exit;
+}
+
 include 'includes/header.php'; 
 
 // 2. Catch the data sent from the Book button on details.php
 $hotel_id = isset($_POST['hotel_id']) ? (int)$_POST['hotel_id'] : 0;
 $room_id = isset($_POST['selected_room_id']) ? (int)$_POST['selected_room_id'] : 0;
 $total_price = isset($_POST['hotel_price']) ? $_POST['hotel_price'] : 0.00;
+$account_id = $_SESSION['user_id'];
 
 // Security check: If they didn't select a room, kick them back
 if ($room_id === 0) {
